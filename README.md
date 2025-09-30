@@ -30,5 +30,5 @@ NoteNest is a lightweight Django web application that allows users to create, vi
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/<rajnishkumar1906/note-app.git
+git clone https://github.com/rajnishkumar1906/note-app.git
 cd note-app
