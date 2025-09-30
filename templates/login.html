@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoteNest Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 30px;
+      background: #f0f2f5 url("{% static 'images/auth_page.png' %}") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start; /* Align content to top-left */
+      justify-content: flex-start; /* Align content to left */
+      flex-direction: column;
+    }
+
+    .app-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #f7fafdff;
+      margin-bottom: 25px;
+      margin-top: 200px;
+      margin-left: 50px; /* Position on left side */
+      text-align: left;
+      text-shadow: 1px 1px 2px rgba(0,0,0,1);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 10px;
+      background-color: rgba(246, 244, 244, 1);
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      border: 1px solid #ced4da;
+      text-align: center;
+      margin-left: 50px; /* Align card to left */
+    }
+
+    .login-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      text-align: left;
+    }
+
+    label {
+      font-weight: 600;
+      color: #495057;
+      font-size: 1rem;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.2);
+      outline: none;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .alert {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    button {
+      padding: 12px 15px;
+      background-color: #2c93f4ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.2s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #198af4ff;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.95rem;
+    }
+
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-name">NoteNest</div>
+
+  <div class="login-card">
+    <h2>Login</h2>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form class="login-form" method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div>
+        <label for="id_username">Username or Email</label>
+        <input type="text" id="id_username" name="username" placeholder="Enter your username or email" required>
+      </div>
+
+      <div>
+        <label for="id_password">Password</label>
+        <input type="password" id="id_password" name="password" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="links">
+      <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.querySelector('.login-form');
+    form.addEventListener('submit', function(event) {
+      const username = form.elements.username.value.trim();
+      const password = form.elements.password.value.trim();
+
+      if (!username || !password) {
+        event.preventDefault();
+        alert("Please fill in both username and password.");
+      }
+    });
+  </script>
+
+</body>
+</html>
