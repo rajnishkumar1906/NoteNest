@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # -------------------------------------------------------------------
 # SECURITY SETTINGS
 # -------------------------------------------------------------------
-SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")  # ✅ use env variable in production
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key") 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # ✅ Allow Render/Heroku host + localhost for local dev
